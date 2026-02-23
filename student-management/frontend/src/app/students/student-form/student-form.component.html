@@ -1,0 +1,71 @@
+<h2 mat-dialog-title>
+  <mat-icon>{{ data ? 'edit' : 'person_add' }}</mat-icon>
+  {{ data ? 'Editar Estudiante' : 'Nuevo Estudiante' }}
+</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="studentForm">
+    <!-- Name Field -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Nombre Completo</mat-label>
+      <input matInput formControlName="name" placeholder="Ej: Juan Pérez">
+      <mat-icon matSuffix>person</mat-icon>
+      <mat-error *ngIf="studentForm.get('name')?.hasError('required')">
+        El nombre es requerido
+      </mat-error>
+      <mat-error *ngIf="studentForm.get('name')?.hasError('minlength')">
+        El nombre debe tener al menos 3 caracteres
+      </mat-error>
+    </mat-form-field>
+
+    <!-- ID Card Field -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Cédula / ID</mat-label>
+      <input matInput formControlName="id_card" placeholder="Ej: 12345678">
+      <mat-icon matSuffix>badge</mat-icon>
+      <mat-error *ngIf="studentForm.get('id_card')?.hasError('required')">
+        La cédula es requerida
+      </mat-error>
+      <mat-error *ngIf="studentForm.get('id_card')?.hasError('minlength')">
+        La cédula debe tener al menos 5 caracteres
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Grade Field -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Grado</mat-label>
+      <mat-select formControlName="grade">
+        <mat-option *ngFor="let grade of grades" [value]="grade">
+          {{ grade }}
+        </mat-option>
+      </mat-select>
+      <mat-icon matSuffix>school</mat-icon>
+      <mat-error *ngIf="studentForm.get('grade')?.hasError('required')">
+        El grado es requerido
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Test Status Field -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Estado de la Prueba</mat-label>
+      <mat-select formControlName="test_status">
+        <mat-option *ngFor="let status of testStatuses" [value]="status.value">
+          {{ status.label }}
+        </mat-option>
+      </mat-select>
+      <mat-icon matSuffix>assignment</mat-icon>
+      <mat-error *ngIf="studentForm.get('test_status')?.hasError('required')">
+        El estado es requerido
+      </mat-error>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="studentForm.invalid || loading">
+    <mat-icon *ngIf="!loading">{{ data ? 'update' : 'save' }}</mat-icon>
+    <span *ngIf="!loading">{{ data ? 'Actualizar' : 'Guardar' }}</span>
+    <mat-spinner *ngIf="loading" diameter="20"></mat-spinner>
+  </button>
+</mat-dialog-actions>

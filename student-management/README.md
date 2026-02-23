@@ -36,7 +36,7 @@ Este proyecto es una aplicación Full Stack para la gestión de estudiantes y el
 
 ### 1. Clonar el repositorio
 ```bash
-git clone https://github.com/jtgama97/Prueba_tecnica.git
+git clone <url-del-repositorio>
 cd student-management
 ```
 
